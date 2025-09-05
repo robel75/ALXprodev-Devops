@@ -28,7 +28,12 @@ echo "Background jobs running:"
 jobs
 
 for pid in "${PIDS[@]}"; do
+    kill -0 $pid 2>/dev/null
+done
+
+for pid in "${PIDS[@]}"; do
     wait $pid
 done
 
 echo "All Pokémon data fetched."
+
