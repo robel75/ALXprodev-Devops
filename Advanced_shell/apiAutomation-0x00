@@ -1,0 +1,17 @@
+#!/bin/bash
+URL="https://pokeapi.co/api/v2/pokemon/pikachu"
+OUTPUT_FILE="data.json"
+ERROR_FILE="errors.txt"
+
+curl -s -o "$OUTPUT_FILE" -w "%{http_code}" "$URL" > status_code.txt
+
+STATUS=$(cat status_code.txt)
+
+if [ "$STATUS" -eq 200 ]; then
+    echo "Data for Pikachu saved to $OUTPUT_FILE"
+else
+    echo "Request failed with status code $STATUS" >> "$ERROR_FILE"
+    rm -f "$OUTPUT_FILE"  # remove incomplete data.json
+fi
+
+rm -f status_code.txt
